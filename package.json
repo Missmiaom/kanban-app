@@ -1,0 +1,28 @@
+{
+  "name": "kanban-app",
+  "version": "1.0.0",
+  "description": "A Jira-like Kanban desktop application for Windows built with Electron.",
+  "main": "main.js",
+  "author": "Kanban",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.kanban.app",
+    "productName": "Kanban",
+    "win": {
+      "target": ["nsis"]
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*"
+    ]
+  }
+}

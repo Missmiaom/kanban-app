@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;" />
+  <title>Kanban</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo">K</span>
+      <span class="brand-name">Kanban Board</span>
+    </div>
+    <div class="topbar-actions">
+      <button id="create-task-btn" class="btn btn-primary">+ Create Task</button>
+    </div>
+  </header>
+
+  <main class="board" id="board"></main>
+
+  <!-- Create / Edit task modal -->
+  <div id="task-modal" class="modal hidden">
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <h2 id="modal-title">Create Task</h2>
+      <form id="task-form" autocomplete="off">
+        <input type="hidden" id="field-id" />
+
+        <label for="field-summary">Summary</label>
+        <input id="field-summary" type="text" required maxlength="200" placeholder="What needs to be done?" />
+
+        <label for="field-desc">Description</label>
+        <textarea id="field-desc" rows="4" placeholder="Add more detail..."></textarea>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label for="field-status">Status</label>
+            <select id="field-status"></select>
+          </div>
+          <div class="form-col">
+            <label for="field-priority">Priority</label>
+            <select id="field-priority">
+              <option value="Highest">Highest</option>
+              <option value="High" selected>High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+              <option value="Lowest">Lowest</option>
+            </select>
+          </div>
+          <div class="form-col">
+            <label for="field-assignee">Assignee</label>
+            <input id="field-assignee" type="text" placeholder="Unassigned" />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="modal-cancel" class="btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Task detail panel -->
+  <div id="detail-modal" class="modal hidden">
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-card detail" role="dialog" aria-modal="true">
+      <div class="detail-head">
+        <span class="issue-key" id="detail-key"></span>
+        <span class="priority-badge" id="detail-priority"></span>
+        <span class="status-text" id="detail-status"></span>
+      </div>
+      <h2 id="detail-title"></h2>
+      <p id="detail-desc" class="detail-desc"></p>
+      <div class="detail-meta">
+        <div><span class="meta-label">Status</span><span id="detail-status-2"></span></div>
+        <div><span class="meta-label">Assignee</span><span id="detail-assignee"></span></div>
+        <div><span class="meta-label">Created</span><span id="detail-created"></span></div>
+      </div>
+      <div class="modal-actions">
+        <button id="detail-edit" class="btn">Edit</button>
+        <button id="detail-delete" class="btn btn-danger">Delete</button>
+        <button id="detail-close" class="btn btn-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
