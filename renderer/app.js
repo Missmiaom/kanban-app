@@ -24,6 +24,43 @@ const taskForm = document.getElementById('task-form');
 const modalTitle = document.getElementById('modal-title');
 const detailModal = document.getElementById('detail-modal');
 
+/* ---------- Theme ---------- */
+
+const THEME_KEY = 'kanban-theme';
+
+function prefersDark() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+// Returns the effective theme: explicit stored choice, else the OS preference.
+function currentTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light' || saved === 'dark') return saved;
+  return prefersDark() ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    // Show the icon of the theme you'd switch TO.
+    const dark = theme === 'dark';
+    btn.textContent = dark ? '☀️' : '🌙';
+    btn.title = dark ? 'Switch to light theme' : 'Switch to dark theme';
+    btn.setAttribute('aria-label', btn.title);
+  }
+}
+
+function toggleTheme() {
+  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  try {
+    localStorage.setItem(THEME_KEY, next);
+  } catch (err) {
+    console.error('Failed to persist theme', err);
+  }
+  applyTheme(next);
+}
+
 /* ---------- Persistence ---------- */
 
 async function loadState() {
@@ -332,6 +369,7 @@ function deleteSelected() {
 /* ---------- Event wiring ---------- */
 
 createBtn.addEventListener('click', openCreate);
+document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 taskForm.addEventListener('submit', handleSubmit);
 document.getElementById('modal-cancel').addEventListener('click', closeModal);
 document.getElementById('detail-close').addEventListener('click', closeDetail);
@@ -360,6 +398,7 @@ window.addEventListener('keydown', (e) => {
 /* ---------- Init ---------- */
 
 async function init() {
+  applyTheme(currentTheme());
   await loadState();
   renderBoard();
 }
