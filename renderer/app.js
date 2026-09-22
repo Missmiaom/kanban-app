@@ -65,6 +65,7 @@ function initials(name) {
 function buildColumn(col) {
   const column = document.createElement('div');
   column.className = 'column';
+  column.dataset.tone = col.key;
 
   const header = document.createElement('div');
   header.className = 'column-header';
