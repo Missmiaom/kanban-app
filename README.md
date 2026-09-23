@@ -9,7 +9,7 @@ A Jira-like Kanban desktop application for **Windows**, built with **Electron**.
 - **Task management** — create, edit, view, and delete tasks with summary, description, priority, and assignee.
 - **Local persistence** — tasks are saved to a JSON file in the OS app-data directory, so the board survives restarts.
 - **Priority badges & assignee avatars** — Jira-like visual density.
-- **Light & dark themes** — follows your OS preference by default, with a topbar toggle to switch and remember your choice.
+- **Light, dark & forest themes** — follows your OS preference by default, with a topbar toggle to cycle through and remember your choice.
 
 ## Tech stack
 

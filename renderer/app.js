@@ -27,6 +27,7 @@ const detailModal = document.getElementById('detail-modal');
 /* ---------- Theme ---------- */
 
 const THEME_KEY = 'kanban-theme';
+const THEMES = ['light', 'dark', 'forest'];
 
 function prefersDark() {
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -35,8 +36,12 @@ function prefersDark() {
 // Returns the effective theme: explicit stored choice, else the OS preference.
 function currentTheme() {
   const saved = localStorage.getItem(THEME_KEY);
-  if (saved === 'light' || saved === 'dark') return saved;
+  if (THEMES.includes(saved)) return saved;
   return prefersDark() ? 'dark' : 'light';
+}
+
+function nextTheme(theme) {
+  return THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
 }
 
 function applyTheme(theme) {
@@ -44,15 +49,21 @@ function applyTheme(theme) {
   const btn = document.getElementById('theme-toggle');
   if (btn) {
     // Show the icon of the theme you'd switch TO.
-    const dark = theme === 'dark';
-    btn.textContent = dark ? '☀️' : '🌙';
-    btn.title = dark ? 'Switch to light theme' : 'Switch to dark theme';
+    const next = nextTheme(theme);
+    const icons = { light: '☀️', dark: '🌙', forest: '🌲' };
+    const labels = {
+      light: 'Switch to light theme',
+      dark: 'Switch to dark theme',
+      forest: 'Switch to forest theme'
+    };
+    btn.textContent = icons[next];
+    btn.title = labels[next];
     btn.setAttribute('aria-label', btn.title);
   }
 }
 
 function toggleTheme() {
-  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  const next = nextTheme(currentTheme());
   try {
     localStorage.setItem(THEME_KEY, next);
   } catch (err) {

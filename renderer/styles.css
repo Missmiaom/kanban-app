@@ -1,5 +1,5 @@
 /* ---------- Theme tokens ----------
-   The app ships a light and a dark theme. Defaults follow the OS preference
+   The app ships light, dark and forest themes. Defaults follow the OS preference
    (`@media (prefers-color-scheme: dark)`), and an explicit choice made through
    the topbar toggle wins over the OS by setting `data-theme` on <html>. */
 
@@ -32,6 +32,10 @@
   --focus-ring: 0 0 0 3px rgba(91, 108, 255, 0.15);
   --accent-soft: rgba(91, 108, 255, 0.07);
   --accent-mid: rgba(91, 108, 255, 0.12);
+  --brand-grad-end: #8f7bff;
+  --brand-shadow: rgba(91, 108, 255, 0.35);
+  --avatar-shadow: rgba(91, 108, 255, 0.3);
+  --btn-primary-shadow: rgba(91, 108, 255, 0.25);
   --placeholder: #aeb6c6;
   --btn-border-hover: #d3d9e6;
   --btn-danger-border: #ffd4d7;
@@ -130,6 +134,51 @@
   --tone-review: #d18bff;
 }
 
+/* Forest theme — an extra green-tinted dark palette. */
+:root[data-theme="forest"] {
+  --bg: #10150f;
+  --bg-top: #171e16;
+  --surface: #1c2419;
+  --surface-soft: #161d14;
+  --border: #2c3a28;
+  --border-strong: #3c4d36;
+  --text: #e6eadf;
+  --muted: #96a38c;
+  --primary: #4caf50;
+  --primary-soft: #22301e;
+  --primary-hover: #5fc463;
+  --danger: #ff6b84;
+  --ok: #3fdb92;
+  --amber: #ffc04d;
+  --column-bg: #151b12;
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-lift: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --topbar-bg: rgba(16, 21, 15, 0.85);
+  --scrollbar-thumb: #35432f;
+  --scrollbar-thumb-hover: #485a40;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --overlay-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --focus-ring: 0 0 0 3px rgba(76, 175, 80, 0.3);
+  --accent-soft: rgba(76, 175, 80, 0.12);
+  --accent-mid: rgba(76, 175, 80, 0.2);
+  --placeholder: #5f6b57;
+  --btn-border-hover: #3c4d36;
+  --btn-danger-border: #5a2c3a;
+  --btn-danger-hover: #3a2230;
+  --avatar-unassigned: #45543c;
+  --prio-highest-bg: #4a2530; --prio-highest-fg: #ff9ab0;
+  --prio-high-bg: #4a3522; --prio-high-fg: #ffb050;
+  --prio-medium-bg: #453f1f; --prio-medium-fg: #ffd46e;
+  --prio-low-bg: #233d28; --prio-low-fg: #7dd88a;
+  --prio-lowest-bg: #1f3a31; --prio-lowest-fg: #4fe0a4;
+  --tone-backlog: #8b9a80;
+  --tone-review: #d18bff;
+  --brand-grad-end: #67c26b;
+  --brand-shadow: rgba(76, 175, 80, 0.35);
+  --avatar-shadow: rgba(76, 175, 80, 0.3);
+  --btn-primary-shadow: rgba(76, 175, 80, 0.25);
+}
+
 * { box-sizing: border-box; }
 
 html, body {
@@ -140,7 +189,7 @@ html, body {
   background: linear-gradient(180deg, var(--bg-top), var(--bg) 220px) fixed;
   -webkit-font-smoothing: antialiased;
 }
-html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="dark"], html[data-theme="forest"] { color-scheme: dark; }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 20px; border: 3px solid transparent; background-clip: content-box; }
@@ -170,11 +219,11 @@ html[data-theme="dark"] { color-scheme: dark; }
   justify-content: center;
   width: 34px; height: 34px;
   border-radius: 11px;
-  background: linear-gradient(135deg, var(--primary), #8f7bff);
+  background: linear-gradient(135deg, var(--primary), var(--brand-grad-end));
   color: #fff;
   font-weight: 700;
   font-size: 18px;
-  box-shadow: 0 6px 16px rgba(91, 108, 255, 0.35);
+  box-shadow: 0 6px 16px var(--brand-shadow);
 }
 .brand-name { font-size: 17px; font-weight: 650; letter-spacing: -0.2px; }
 
@@ -196,7 +245,7 @@ html[data-theme="dark"] { color-scheme: dark; }
   background: var(--primary);
   border-color: var(--primary);
   color: #fff;
-  box-shadow: 0 6px 16px rgba(91, 108, 255, 0.25);
+  box-shadow: 0 6px 16px var(--btn-primary-shadow);
 }
 .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
 .btn-danger { background: var(--surface); border-color: var(--btn-danger-border); color: var(--danger); }
@@ -255,7 +304,7 @@ html[data-theme="dark"] { color-scheme: dark; }
   border-radius: 50%;
   flex: none;
 }
-.column[data-tone="Backlog"] .column-dot { background: var(--tone-line); }
+.column[data-tone="Backlog"] .column-dot { background: var(--tone-backlog); }
 .column[data-tone="Todo"] .column-dot { background: var(--primary); }
 .column[data-tone="In Progress"] .column-dot { background: var(--amber); }
 .column[data-tone="In Review"] .column-dot { background: var(--tone-review); }
@@ -332,7 +381,7 @@ html[data-theme="dark"] { color-scheme: dark; }
 .avatar {
   width: 25px; height: 25px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), #8f7bff);
+  background: linear-gradient(135deg, var(--primary), var(--brand-grad-end));
   color: #fff;
   display: inline-flex;
   align-items: center;
@@ -341,7 +390,7 @@ html[data-theme="dark"] { color-scheme: dark; }
   font-weight: 650;
   overflow: hidden;
   user-select: none;
-  box-shadow: 0 2px 6px rgba(91, 108, 255, 0.3);
+  box-shadow: 0 2px 6px var(--avatar-shadow);
 }
 .avatar.unassigned { background: var(--avatar-unassigned); box-shadow: none; color: #fff; }
 
