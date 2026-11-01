@@ -143,7 +143,7 @@ function renderBoard() {
 function renderTasks() {
   state.columns.forEach((col) => {
     const body = document.querySelector(`.column-body[data-column="${col.key}"]`);
-    body.querySelectorAll('.card').forEach((c) => c.remove());
+    body.querySelectorAll('.card, .column-empty').forEach((el) => el.remove());
     const items = state.tasks.filter((t) => t.status === col.key);
     if (items.length === 0) {
       const empty = document.createElement('div');
